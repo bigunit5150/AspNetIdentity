@@ -112,6 +112,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AspNetIdentity.mdf" />
+    <Content Include="App_Data\AspNetIdentity_log.ldf" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -126,7 +128,18 @@
   <ItemGroup>
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
+    <Compile Include="Migrations\201503142114512_InitialCreate.cs" />
+    <Compile Include="Migrations\201503142114512_InitialCreate.Designer.cs">
+      <DependentUpon>201503142114512_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503142114512_InitialCreate.resx">
+      <DependentUpon>201503142114512_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
