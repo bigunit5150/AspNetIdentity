@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
+    <Compile Include="Infrastructure\ApplicationUserManger.cs" />
     <Compile Include="Migrations\201503142114512_InitialCreate.cs" />
     <Compile Include="Migrations\201503142114512_InitialCreate.Designer.cs">
       <DependentUpon>201503142114512_InitialCreate.cs</DependentUpon>
