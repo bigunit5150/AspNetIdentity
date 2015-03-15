@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Results;
 using AspNetIdentity.WebApi.Infrastructure;
 using AspNetIdentity.WebApi.Models;
-using Microsoft.AspNet.Identity;
 
 namespace AspNetIdentity.WebApi.Controllers
 {
@@ -26,9 +22,7 @@ namespace AspNetIdentity.WebApi.Controllers
             var user = await this.AppUserManager.FindByIdAsync(Id);
 
             if (user != null)
-            {
                 return Ok(this.TheModelFactory.Create(user));
-            }
 
             return NotFound();
         }
@@ -65,8 +59,30 @@ namespace AspNetIdentity.WebApi.Controllers
             if (!addUserResult.Succeeded)
                 return GetErrorResult(addUserResult);
 
-            Uri locationHeader = new Uri(Url.Link("GetUserById", new {id = user.Id}));
+
+            string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = new Uri(Url.Link("ConfirmEmailroute", new {userId = user.Id, code = code}));
+            await
+                this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account",
+                    "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+
             return Created(locationHeader, TheModelFactory.Create(user));
+        }
+
+        [HttpGet]
+        [Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
+        public async Task<IHttpActionResult> ConfirmEmail(string userId = "", string code = "")
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(code))
+            {
+                ModelState.AddModelError("", "User Id and Code are required");
+                return BadRequest(ModelState);
+            }
+
+            var result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
+            return result.Succeeded ? Ok() : GetErrorResult(result);
         }
     }
 }
