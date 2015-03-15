@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace AspNetIdentity.WebApi.Infrastructure
 {
@@ -15,5 +19,6 @@ namespace AspNetIdentity.WebApi.Infrastructure
         {
             return new ApplicationDbContext();
         }
+
     }
 }
