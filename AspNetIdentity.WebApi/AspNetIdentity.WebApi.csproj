@@ -142,13 +142,16 @@
       <DependentUpon>201503142114512_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ChangePasswordBindingModel.cs" />
     <Compile Include="Models\CreateUserBidingModel.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Provider\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201503142114512_InitialCreate.resx">
       <DependentUpon>201503142114512_InitialCreate.cs</DependentUpon>

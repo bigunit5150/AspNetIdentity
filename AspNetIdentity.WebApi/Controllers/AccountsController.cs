@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AspNetIdentity.WebApi.Infrastructure;
 using AspNetIdentity.WebApi.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AspNetIdentity.WebApi.Controllers
 {
@@ -84,5 +86,27 @@ namespace AspNetIdentity.WebApi.Controllers
             var result = await this.AppUserManager.ConfirmEmailAsync(userId, code);
             return result.Succeeded ? Ok() : GetErrorResult(result);
         }
+
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await this.AppUserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            return !result.Succeeded ? GetErrorResult(result) : Ok();
+        }
+
+        [Route("user/{id:guid")]
+        public async Task<IHttpActionResult> DeleteUser(string id)
+        {
+            var appUser = await this.AppUserManager.FindByIdAsync(id);
+
+            if (appUser == null) return NotFound();
+            var result = await this.AppUserManager.DeleteAsync(appUser);
+            return !result.Succeeded ? GetErrorResult(result) : Ok();
+        }   
     }
+
+
 }
