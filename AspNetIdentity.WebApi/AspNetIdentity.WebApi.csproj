@@ -131,6 +131,9 @@
     <Content Include="App_Data\AspNetIdentity.mdf" />
     <Content Include="App_Data\AspNetIdentity_log.ldf" />
     <Content Include="packages.config" />
+    <Content Include="scripts\angular.js" />
+    <Content Include="scripts\angular.min.js" />
+    <Content Include="scripts\angular.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -139,6 +142,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scripts\angular-mocks.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

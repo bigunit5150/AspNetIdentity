@@ -16,7 +16,7 @@ namespace AspNetIdentity.WebApi.Controllers
     public class AccountsController : BaseApiController
     {
 
-        [Authorize(Roles = "Admin")]
+
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
