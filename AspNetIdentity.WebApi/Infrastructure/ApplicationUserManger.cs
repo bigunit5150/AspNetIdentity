@@ -38,17 +38,17 @@ namespace AspNetIdentity.WebApi.Infrastructure
                 RequireUppercase = true,
             };
 
-            appUserManager.EmailService = new AspNetIdentity.WebApi.Services.EmailService();
+            //appUserManager.EmailService = new AspNetIdentity.WebApi.Services.EmailService();
 
-            var dataProtectionProvider = options.DataProtectionProvider;
-            if (dataProtectionProvider != null)
-            {
-                appUserManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"))
-                {
-                    //Code for email confirmation and reset password life time
-                    TokenLifespan = TimeSpan.FromHours(6)
-                };
-            }
+            //var dataProtectionProvider = options.DataProtectionProvider;
+            //if (dataProtectionProvider != null)
+            //{
+            //    appUserManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"))
+            //    {
+            //        //Code for email confirmation and reset password life time
+            //        TokenLifespan = TimeSpan.FromHours(6)
+            //    };
+            //}
 
             return appUserManager;
         }

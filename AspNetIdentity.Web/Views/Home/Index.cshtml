@@ -1,31 +1,105 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+﻿<div data-ng-controller="accountController" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <strong class="error">{{ error }}</strong>
+            <p data-ng-hide="addMode"><a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary">Add New</a></p>
+            <form name="addaccount" data-ng-show="addMode" style="width:600px;margin:0px auto;">
+                <div class="form-group">
+                    <label for="uname" class="col-sm-3 control-label">User Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="uname" placeholder="please enter your user name" data-ng-model="newaccount.UserName" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fname" class="col-sm-3 control-label">First Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="fname" placeholder="please enter your first name" data-ng-model="newaccount.FirstName" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lname" class="col-sm-3 control-label">Last Name:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="lname" placeholder="please enter your last name" data-ng-model="newaccount.LastName" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">Email Address:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" placeholder="please enter your email address" data-ng-model="newaccount.Email" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="passwd" class="col-sm-3 control-label">Password:</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="passwd" placeholder="please enter your password" data-ng-model="newaccount.Password" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cpasswd" class="col-sm-3 control-label">Confirm Password:</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="cpasswd" placeholder="please re-enter your password" data-ng-model="newaccount.ConfirmPassword" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="Add" data-ng-click="add()" data-ng-disabled="!addaccount.$valid" class="btn btn-primary" />
+                        <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary" />
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <br />
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" style="width:800px">
+                    <tr>
+                        <td>UserName</td>
+                        <td>FullName</td>
+                        <th>Email</th>
+                        <th>Level</th>
+                        <th>Join Date</th>
+                    </tr>
+                    <tr data-ng-repeat="account in accounts">
+                        <td hidden="true"><strong hiddata-ng-hide="account.editMode">{{ account.id }}</strong></td>
+                        <td>
+                            <p data-ng-hide="account.editMode">{{ account.userName }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.userName" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="account.editMode">{{ account.fullName }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.fullName" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="account.editMode">{{ account.email }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.email" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="account.editMode">{{ account.level }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.level" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="account.editMode">{{ account.joinDate }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.joinDate" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="account.editMode"><a data-ng-click="toggleEdit(account)" href="javascript:;">Edit</a> | <a data-ng-click="deleteaccount(account)" href="javascript:;">Delete</a></p>
+                            <p data-ng-show="account.editMode"><a data-ng-click="save(account)" href="javascript:;">Save</a> | <a data-ng-click="toggleEdit(account)" href="javascript:;">Cancel</a></p>
+                        </td>
+                    </tr>
+                </table>
+                <hr />
+            </div>
+        </div>
+    </div>
+    <div id="mydiv" data-ng-show="loading">
+        <img src="Images/ajax-loader.gif" class="ajax-loader" />
     </div>
 </div>

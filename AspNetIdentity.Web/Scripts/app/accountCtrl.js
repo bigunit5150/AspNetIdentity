@@ -7,9 +7,10 @@
     function accountController($scope, $http) {
         $scope.loading = true;
         $scope.addMode = false;
+        $scope.apiHome = 'http://localhost:51624';
 
-        $http.get('/api/account').success(function(data) {
-                $scope.account = data;
+        $http.get($scope.apiHome + '/api/accounts/users').success(function(data) {
+                $scope.accounts = data;
                 $scope.loading = false;
             })
             .error(function() {
@@ -28,7 +29,7 @@
         //Create Account
         $scope.add = function() {
             $scope.loading = true;
-            $http.post('/api/account/', this.newaccount).success(function(data) {
+            $http.post($scope.apiHome + '/api/accounts/create', this.newaccount).success(function (data) {
                 alert("Account Created Successfully!");
                 $scope.addMode = false;
                 $scope.accounts.push(data);
@@ -45,7 +46,7 @@
             $scope.loading = true;
             var frien = this.account;
             alert(frien);
-            $http.put('/api/account/' + friend.Id, frien).success(function(data) {
+            $http.put($scope.apiHome + '/api/account/' + friend.Id, frien).success(function (data) {
                 alert("account updated!!");
                 frien.editMode = false;
                 $scope.loading = false;
@@ -58,7 +59,7 @@
         $scope.deleteaccount = function() {
             $scope.loading = true;
             var Id = this.account.id;
-            $http.delete('/api/account/' + Id).success(function(data) {
+            $http.delete($scope.apiHome + '/api/account/' + Id).success(function (data) {
                 alert("Account successfully deleted!!");
                 $.forEach($scope.accounts, function(i) {
                     if ($scope.accounts[i].id === Id) {
