@@ -7,6 +7,7 @@
     function accountController($scope, $http) {
         $scope.loading = true;
         $scope.addMode = false;
+        $scope.editMode = true;
         $scope.apiHome = 'http://localhost:51624';
 
         $http.get($scope.apiHome + '/api/accounts/users').success(function(data) {
@@ -19,7 +20,7 @@
             });
 
         $scope.toggleEdit = function() {
-            $scope.editMode = !$scope.editMode;
+            this.account.editMode = !this.account.editMode;
         };
 
         $scope.toggleAdd = function() {
@@ -42,11 +43,9 @@
 
         //Edit Account
         $scope.save = function() {
-            alert("Edit");
             $scope.loading = true;
             var frien = this.account;
-            alert(frien);
-            $http.put($scope.apiHome + '/api/account/' + friend.Id, frien).success(function (data) {
+            $http.put($scope.apiHome + '/api/accounts/update', frien).success(function (data) {
                 alert("account updated!!");
                 frien.editMode = false;
                 $scope.loading = false;
@@ -59,7 +58,7 @@
         $scope.deleteaccount = function() {
             $scope.loading = true;
             var Id = this.account.id;
-            $http.delete($scope.apiHome + '/api/account/' + Id).success(function (data) {
+            $http.delete($scope.apiHome +'/api/accounts/user/' + Id).success(function(data) {
                 alert("Account successfully deleted!!");
                 $.forEach($scope.accounts, function(i) {
                     if ($scope.accounts[i].id === Id) {

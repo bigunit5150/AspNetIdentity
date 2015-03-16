@@ -62,7 +62,8 @@
                 <table class="table table-bordered table-hover" style="width:800px">
                     <tr>
                         <td>UserName</td>
-                        <td>FullName</td>
+                        <td>FirstName</td>
+                        <td>LastName</td>
                         <th>Email</th>
                         <th>Level</th>
                         <th>Join Date</th>
@@ -70,24 +71,25 @@
                     <tr data-ng-repeat="account in accounts">
                         <td hidden="true"><strong hiddata-ng-hide="account.editMode">{{ account.id }}</strong></td>
                         <td>
-                            <p data-ng-hide="account.editMode">{{ account.userName }}</p>
-                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.userName" />
+                            <p data-ng-hide="False">{{ account.userName }}</p>
                         </td>
                         <td>
-                            <p data-ng-hide="account.editMode">{{ account.fullName }}</p>
-                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.fullName" />
+                            <p data-ng-hide="account.editMode">{{ account.firstName }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.firstName" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="account.editMode">{{ account.lastName }}</p>
+                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.lastName" />
                         </td>
                         <td>
                             <p data-ng-hide="account.editMode">{{ account.email }}</p>
                             <input data-ng-show="account.editMode" type="text" data-ng-model="account.email" />
                         </td>
                         <td>
-                            <p data-ng-hide="account.editMode">{{ account.level }}</p>
-                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.level" />
+                            <p data-ng-hide="False">{{ account.level }}</p>
                         </td>
                         <td>
-                            <p data-ng-hide="account.editMode">{{ account.joinDate }}</p>
-                            <input data-ng-show="account.editMode" type="text" data-ng-model="account.joinDate" />
+                            <p data-ng-hide="False">{{ account.joinDate }}</p>
                         </td>
                         <td>
                             <p data-ng-hide="account.editMode"><a data-ng-click="toggleEdit(account)" href="javascript:;">Edit</a> | <a data-ng-click="deleteaccount(account)" href="javascript:;">Delete</a></p>

@@ -100,6 +100,47 @@ namespace AspNetIdentity.WebApi.Controllers
 
         }
 
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("update")]
+        public async Task<IHttpActionResult> UpdateUser(UpdateUserBindingModel updateUserModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await this.AppUserManager.FindByIdAsync(updateUserModel.Id);
+            if (!string.IsNullOrWhiteSpace(updateUserModel.FirstName))
+                user.FirstName = updateUserModel.FirstName;
+            if (!string.IsNullOrWhiteSpace(updateUserModel.LastName))
+                user.LastName = updateUserModel.LastName;
+            if (!string.IsNullOrWhiteSpace(updateUserModel.Email))
+                user.Email = updateUserModel.Email;
+
+
+            IdentityResult addUserResult = await this.AppUserManager.UpdateAsync(user);
+
+            if (!addUserResult.Succeeded)
+            {
+                return GetErrorResult(addUserResult);
+            }
+
+            //string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
+            //var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
+
+            //await this.AppUserManager.SendEmailAsync(user.Id,
+            //                                        "Confirm your account",
+            //                                        "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            var locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+
+            return Created(locationHeader, TheModelFactory.Create(user));
+
+        }
+
         //[AllowAnonymous]
         //[HttpGet]
         //[Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
@@ -142,7 +183,7 @@ namespace AspNetIdentity.WebApi.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [Route("user/{id:guid}")]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
